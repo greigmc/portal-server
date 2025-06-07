@@ -41,7 +41,7 @@ build/Release
 # Dependency directories
 node_modules/
 jspm_packages/
-public/
+# public/
 
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
@@ -137,8 +137,10 @@ dist
 .pnp.*
 
 # Ignore the entire public folder
-public/
+# public/
 
 # Ignore all PNG and JPG files
 .png
 .jpg
+
+
