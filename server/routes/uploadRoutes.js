@@ -1,9 +1,8 @@
-// uploadRoutes.js
 import express from "express";
 import multer from "multer";
-import fs from "fs";
 import path from "path";
 import { Client } from "basic-ftp";
+import { Readable } from "stream"; // ✅ Import Readable for stream handling
 import verifyToken from "../middleware/authMiddleware.js";
 import { User } from "../models/userModel.js";
 import dotenv from "dotenv";
@@ -16,7 +15,7 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Upload to FTP
+// ✅ Upload to FTP using a stream
 async function uploadToFtp(buffer, remoteFileName) {
   const client = new Client();
   try {
@@ -24,11 +23,17 @@ async function uploadToFtp(buffer, remoteFileName) {
       host: process.env.FTP_HOST,
       user: process.env.FTP_USER,
       password: process.env.FTP_PASSWORD,
+      secure: true, // ✅ Use FTPS (secure FTP)
     });
 
     await client.ensureDir(process.env.FTP_UPLOAD_DIR);
-    await client.uploadFrom(Buffer.from(buffer), `${process.env.FTP_UPLOAD_DIR}/${remoteFileName}`);
+
+    // ✅ Convert buffer to stream
+    const stream = Readable.from(buffer);
+    await client.uploadFrom(stream, `${process.env.FTP_UPLOAD_DIR}/${remoteFileName}`);
+
     await client.close();
+
     return `${process.env.FTP_PUBLIC_URL}/${remoteFileName}`;
   } catch (error) {
     console.error("FTP upload failed:", error);
