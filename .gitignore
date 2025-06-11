@@ -144,3 +144,8 @@ dist
 .jpg
 
 
+# In your .gitignore
+/public/uploads/*
+!/public/uploads/.gitkeep
+
+
