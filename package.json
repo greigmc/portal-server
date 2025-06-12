@@ -4,12 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "npm run build --prefix client",
+    "build": "echo 'No build step needed'",
     "lint": "eslint .",
-    "dev": "concurrently \"npm run server\" \"npm run frontend\"",
+    "dev": "npm run server",
     "start": "node server/server.js",
-    "server": "nodemon server/server.js",
-    "frontend": "npm --prefix client run dev"
+    "server": "nodemon server/server.js"
   },
   "dependencies": {
     "basic-ftp": "^5.0.5",
