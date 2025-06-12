@@ -17,26 +17,26 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  // phone: {
-  //   type: String,
-  //   required: true,
-  // },
-  // address: {
-  //   type: String,
-  //   required: true,
-  // },
-  // suburb: {
-  //   type: String,
-  //   required: true,
-  // },
-  // postcode: {
-  //   type: String,
-  //   required: true,
-  // },
-  // territory: {
-  //   type: String,
-  //   required: true,
-  // },
+  phone: {
+    type: String,
+    required: false,
+  },
+  address: {
+    type: String,
+    required: false,
+  },
+  suburb: {
+    type: String,
+    required: false,
+  },
+  postcode: {
+    type: String,
+    required: false,
+  },
+  territory: {
+    type: String,
+    required: false,
+  },
   password: {
     type: String,
     required: true,
