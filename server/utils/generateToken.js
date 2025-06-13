@@ -2,7 +2,10 @@
 import jwt from "jsonwebtoken";
 
 const generateToken = (user) => {
-  const { password, ...userWithoutPassword } = user; // Destructure to remove password
+  const {
+    password,
+    ...userWithoutPassword
+  } = user; // Destructure to remove password
   const payload = {
     id: user.id || user._id,
     name: user.name,
@@ -14,8 +17,8 @@ const generateToken = (user) => {
     postcode: user.postcode,
     territory: user.territory,
     profilePicture: user.profilePicture || null,
-    fileUploader: user.fileUploader || null,
-    fileUploaderOriginalName: user.fileUploaderOriginalName || null,
+    fileUploader: user.cvDocument || null,
+    fileUploaderOriginalName: user.cvDocument?.originalName || null,
     profileLinks: user.profileLinks || {},
     bio: user.bio || "",
   };
