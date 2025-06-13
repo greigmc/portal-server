@@ -48,12 +48,18 @@ const UserSchema = new mongoose.Schema({
     type: Date,
   },
   profilePicture: {
-    type: String,
-    default: null,
+    url: String,
+    publicId: String,
+  },
+  cvDocument: {
+    url: String,
+    publicId: String,
+    originalName: String,
   },
   fileUploader: {
-    type: String,
-    default: null,
+    url: String,
+    publicId: String,
+    originalName: String,
   },
   fileUploaderOriginalName: {
     type: String,
