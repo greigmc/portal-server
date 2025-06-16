@@ -7,6 +7,8 @@ import connectDB from "./config/db.js";
 import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+
 
 dotenv.config();
 
@@ -30,6 +32,8 @@ connectDB(process.env.MONGODB_URI);
 app.use("/api", authRoutes);
 app.use("/api", userRoutes);
 app.use("/api/upload", uploadRoutes);
+// admin routes
+app.use("/api/users", adminRoutes);
 
 // **Serve uploads statically (important!)**
 app.use(
