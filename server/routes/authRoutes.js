@@ -44,13 +44,14 @@ router.post(
   signin,
 );
 
-// Password reset routes
+// Password forget routes
 router.post(
   "/forgotPassword",
   [body("email").isEmail().normalizeEmail()],
   forgotPassword,
 );
 
+// Password reset routes
 router.post(
   "/resetPassword",
   [

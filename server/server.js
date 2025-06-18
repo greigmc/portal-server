@@ -2,43 +2,62 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
-
 import connectDB from "./config/db.js";
-import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-
+import signInRoutes from "./routes/signInRoutes.js";
+import signUpRoutes from "./routes/signUpRoutes.js";
+import forgetPasswordRoutes from "./routes/forgetPasswordRoutes.js";
+import resetPasswordRoutes from "./routes/resetPasswordRoutes.js";
 
 dotenv.config();
 
 const app = express();
 
 // Use your FRONTEND_URL env var or fallback
-const allowedOrigin = (process.env.FRONTEND_URL || "http://localhost:5173").replace(/\/$/, "");
+const allowedOrigin = (
+  process.env.FRONTEND_URL || "http://localhost:5173"
+).replace(/\/$/, "");
 
 // CORS with dynamic origin
-app.use(cors({
-  origin: allowedOrigin,
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: allowedOrigin,
+    credentials: true,
+  }),
+);
 
 app.use(express.json());
 
 // Connect to MongoDB
 connectDB(process.env.MONGODB_URI);
 
-// API routes
-app.use("/api", authRoutes);
+// user routes
 app.use("/api", userRoutes);
+
+// signIn routes
+app.use("/api", signInRoutes);
+
+// signUp routes
+app.use("/api", signUpRoutes);
+
+// forget password routes
+app.use("/api", forgetPasswordRoutes);
+
+// reset password routes
+app.use("/app", resetPasswordRoutes);
+
+// upload routes
 app.use("/api/upload", uploadRoutes);
+
 // admin routes
 app.use("/api/users", adminRoutes);
 
 // **Serve uploads statically (important!)**
 app.use(
   "/uploads",
-  express.static(path.join(process.cwd(), "public", "uploads"))
+  express.static(path.join(process.cwd(), "public", "uploads")),
 );
 
 const port = process.env.PORT || 5000;

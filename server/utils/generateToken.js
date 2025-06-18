@@ -2,10 +2,7 @@
 import jwt from "jsonwebtoken";
 
 const generateToken = (user) => {
-  const {
-    password,
-    ...userWithoutPassword
-  } = user; // Destructure to remove password
+  const { password, ...userWithoutPassword } = user; // Destructure to remove password
   const payload = {
     id: user.id || user._id,
     name: user.name,
