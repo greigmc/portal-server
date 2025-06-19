@@ -1,3 +1,4 @@
+// validators/handleValidation.js
 import { validationResult } from "express-validator";
 
 export const handleValidationErrors = (req, res) => {

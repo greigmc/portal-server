@@ -1,24 +1,22 @@
 // forgetPasswordController.js
 import { User } from "../models/userModel.js";
 import { sendResetPasswordEmail } from "../mailer/mailer.js";
-import { handleValidationErrors } from "../validators/handleValidation.js";
 import { normalizeEmail } from "../helpers/userHelpers.js";
 import crypto from "crypto";
 
 export const forgotPassword = async (req, res) => {
-  if (handleValidationErrors(req, res)) return;
-
   const { email } = req.body;
 
   try {
     const user = await User.findOne({
       email: normalizeEmail(email),
     });
+
+    // Always respond with success to prevent email enumeration
     if (!user) {
       return res.status(200).json({
         message: "If that email exists, a reset link has been sent.",
       });
-      // Don't reveal whether the email exists
     }
 
     // Generate secure token

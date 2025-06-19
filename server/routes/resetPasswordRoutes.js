@@ -2,7 +2,7 @@
 import express from "express";
 import { body } from "express-validator";
 import { resetPassword } from "../controllers/resetPasswordController.js";
-import { handleValidationErrors } from "../middleware/handleValidationErrors.js";
+import { handleValidationErrors } from "../validators/handleValidation.js";
 
 const router = express.Router();
 
@@ -13,11 +13,9 @@ router.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters"),
+    handleValidationErrors,
   ],
-  (req, res) => {
-    if (handleValidationErrors(req, res)) return;
-    resetPassword(req, res);
-  },
+  resetPassword,
 );
 
 export default router;

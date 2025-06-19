@@ -1,8 +1,8 @@
 // contactRoutes.js
 import express from "express";
 import { body } from "express-validator";
-import { handleValidationErrors } from "../middleware/handleValidationErrors.js";
-import { sendContactEmails } from "../controllers/contactController.js";
+import { handleContactForm } from "../controllers/contactController.js";
+import { handleValidationErrors } from "../validators/handleValidation.js";
 
 const router = express.Router();
 
@@ -17,17 +17,9 @@ router.post(
       .notEmpty()
       .isLength({ max: 300 })
       .withMessage("Message must be under 300 characters"),
+    handleValidationErrors, // 💡 middleware style!
   ],
-  (req, res) => {
-    if (handleValidationErrors(req, res)) return;
-
-    sendContactEmails(req.body)
-      .then(() => res.status(200).json({ message: "Message sent!" }))
-      .catch((err) => {
-        console.error("Email sending error:", err);
-        res.status(500).json({ message: "Error sending email" });
-      });
-  },
+  handleContactForm, // 🎯 this now handles the logic
 );
 
 export default router;

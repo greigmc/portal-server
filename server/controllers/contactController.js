@@ -6,9 +6,9 @@ export const handleContactForm = async (req, res) => {
 
   try {
     await sendContactEmails({ name, email, phone, subject, message });
-    res.json({ status: "success" });
+    res.status(200).json({ message: "Message sent!" });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ status: "fail" });
+    console.error("Email sending error:", err);
+    res.status(500).json({ message: "Error sending email" });
   }
 };
