@@ -1,11 +1,11 @@
 // validators/handleValidation.js
-// ✅ Proper Express middleware version
 import { validationResult } from "express-validator";
 
-export const handleValidationErrors = (req, res, next) => {
+export const handleValidationErrors = (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    res.status(400).json({ errors: errors.array() });
+    return true;
   }
-  next(); // ✅ continue to controller
+  return false;
 };
