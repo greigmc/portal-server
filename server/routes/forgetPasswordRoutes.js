@@ -2,20 +2,14 @@
 import express from "express";
 import { body } from "express-validator";
 import { forgotPassword } from "../controllers/forgetPasswordController.js";
-import { handleValidationErrors } from "../validators/handleValidation.js";
 
 const router = express.Router();
 
+// Password forget routes
 router.post(
   "/forgotPassword",
-  [
-    body("email")
-      .isEmail()
-      .normalizeEmail()
-      .withMessage("Valid email is required"),
-    handleValidationErrors, // ✅ used as middleware
-  ],
-  forgotPassword, // ✅ simplified call
+  [body("email").isEmail().normalizeEmail()],
+  forgotPassword,
 );
 
 export default router;

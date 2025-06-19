@@ -5,7 +5,7 @@ import generateToken from "../utils/generateToken.js";
 
 export const resetPassword = async (req, res) => {
   const { token, password } = req.body;
-  // console.log("🔍 Received token and password:", token, password);
+  console.log("🔍 Received token and password:", token, password);
 
   try {
     // Find the user by the reset token

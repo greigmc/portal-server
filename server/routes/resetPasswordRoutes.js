@@ -2,10 +2,10 @@
 import express from "express";
 import { body } from "express-validator";
 import { resetPassword } from "../controllers/resetPasswordController.js";
-import { handleValidationErrors } from "../validators/handleValidation.js";
 
 const router = express.Router();
 
+// Password reset routes
 router.post(
   "/resetPassword",
   [
@@ -13,7 +13,6 @@ router.post(
     body("password")
       .isLength({ min: 6 })
       .withMessage("Password must be at least 6 characters"),
-    handleValidationErrors,
   ],
   resetPassword,
 );
