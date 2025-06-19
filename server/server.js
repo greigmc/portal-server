@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
+
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
 import uploadRoutes from "./routes/uploadRoutes.js";
@@ -17,53 +18,46 @@ dotenv.config();
 
 const app = express();
 
-// Use your FRONTEND_URL env var or fallback
-const allowedOrigin = (
-  process.env.FRONTEND_URL || "http://localhost:5173"
-).replace(/\/$/, "");
+// ✅ List of allowed frontend origins
+const allowedOrigins = [
+  "https://www.greigmcmahon.com",
+  "https://www.greigmcmahon.net",
+  "http://localhost:5173", // for local dev
+];
 
-// CORS with dynamic origin
+// ✅ CORS setup
 app.use(
   cors({
-    origin: allowedOrigin,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS: " + origin));
+      }
+    },
     credentials: true,
-  }),
+  })
 );
 
 app.use(express.json());
 
-// Connect to MongoDB
+// ✅ Connect to MongoDB
 connectDB(process.env.MONGODB_URI);
 
-// user routes
+// ✅ API Routes
 app.use("/api", userRoutes);
-
-// signIn routes
 app.use("/api", signInRoutes);
-
-// signUp routes
 app.use("/api", signUpRoutes);
-
-// forget password routes
 app.use("/api", forgetPasswordRoutes);
-
-// reset password routes
-app.use("/app", resetPasswordRoutes);
-
-// upload routes
+app.use("/api", contactRoutes);
 app.use("/api/upload", uploadRoutes);
-
-// admin routes
 app.use("/api/users", adminRoutes);
 
-// Contact Form routes
-app.use("/api", contactRoutes);
+// ✅ Reset password route (under /app, possibly an SSR reset page?)
+app.use("/app", resetPasswordRoutes);
 
-// **Serve uploads statically (important!)**
-app.use(
-  "/uploads",
-  express.static(path.join(process.cwd(), "public", "uploads")),
-);
+// ✅ Static uploads
+app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
