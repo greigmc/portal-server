@@ -101,7 +101,7 @@ ${message}</p>
 <p>Kind regards,<br>
 ${process.env.EMAIL_YOURNAME}<br>
 ${process.env.EMAIL_USER}<br>
-<a href="${process.env.EMAIL_YOURSITE}" target="_blank" rel="noopener noreferrer">${process.env.EMAIL_YOURSITE}</a></p>
+${process.env.EMAIL_YOURSITE}
   `,
   };
   await transporter.sendMail(notifyOwner);
