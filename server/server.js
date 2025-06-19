@@ -10,6 +10,7 @@ import signInRoutes from "./routes/signInRoutes.js";
 import signUpRoutes from "./routes/signUpRoutes.js";
 import forgetPasswordRoutes from "./routes/forgetPasswordRoutes.js";
 import resetPasswordRoutes from "./routes/resetPasswordRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
 
 dotenv.config();
 
@@ -53,6 +54,9 @@ app.use("/api/upload", uploadRoutes);
 
 // admin routes
 app.use("/api/users", adminRoutes);
+
+// Contact Form routes
+app.use("/api", contactRoutes);
 
 // **Serve uploads statically (important!)**
 app.use(

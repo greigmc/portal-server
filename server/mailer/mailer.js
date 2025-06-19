@@ -65,3 +65,38 @@ export const sendResetPasswordEmail = async (to, token, name) => {
     console.error("❌ Password reset email error:", err);
   }
 };
+
+// Website email
+export const sendContactEmails = async ({
+  name,
+  email,
+  phone,
+  subject,
+  message,
+}) => {
+  const yourEmail = `${process.env.EMAIL_YOURNAME} <${process.env.EMAIL_USER}>`;
+  const content = `name: ${name} \n email: ${email} \n phone: ${phone} \n subject: ${subject} \n message: ${message}`;
+
+  const notifyOwner = {
+    from: yourEmail,
+    to: process.env.EMAIL_USER, // <-- fix: you were using EMAIL_HOST
+    subject: `New Portfolio Message from ${name}`,
+    text: content,
+  };
+
+  const autoReply = {
+    from: yourEmail,
+    to: email,
+    subject: "Message received",
+    html: `
+      <p>Hi ${name},<br>
+      Thank you for sending me a message. I will get back to you soon.<br><br>
+      Regards,<br>
+      ${process.env.EMAIL_YOURNAME}<br>
+      <a href="${process.env.EMAIL_YOURSITE}">${process.env.EMAIL_YOURSITE}</a></p>
+    `,
+  };
+
+  await transporter.sendMail(notifyOwner);
+  await transporter.sendMail(autoReply);
+};
