@@ -2,7 +2,6 @@
 import express from "express";
 import { body } from "express-validator";
 import { handleContactForm } from "../controllers/contactController.js";
-import { handleValidationErrors } from "../validators/handleValidation.js";
 
 const router = express.Router();
 
@@ -17,7 +16,6 @@ router.post(
       .notEmpty()
       .isLength({ max: 300 })
       .withMessage("Message must be under 300 characters"),
-    handleValidationErrors, // 💡 middleware style!
   ],
   handleContactForm, // 🎯 this now handles the logic
 );

@@ -2,6 +2,8 @@
 import express from "express";
 import { body } from "express-validator";
 import { signup } from "../controllers/signUpController.js";
+import { handleValidationErrors } from "../validators/handleValidation.js"; // ✅ import it
+
 
 const router = express.Router();
 
