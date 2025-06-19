@@ -92,11 +92,11 @@ export const sendContactEmails = async ({
     html: `
 <p>Hi ${name},</p>
 
-<p>Thank you for getting in touch via my portfolio. I’ve received your message and will respond as soon as I can.</p>
+<p>Thank you for getting in touch via my website. I’ve received your message and will respond as soon as I can.</p>
 
 <p><strong>Your Message:</strong><br>
-<em>${subject}</em><br>
-${message}</p>
+Subject: <em>${subject}</em><br>
+Message: ${message}</p>
 
 <p>Kind regards,<br>
 ${process.env.EMAIL_YOURNAME}<br>
