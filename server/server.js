@@ -22,7 +22,7 @@ const app = express();
 const allowedOrigins = [
   "https://www.greigmcmahon.com",
   "https://www.greigmcmahon.net",
-  "http://localhost:5173", // for local dev
+  "http://localhost:5173",
 ];
 
 // ✅ CORS setup
