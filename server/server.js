@@ -36,7 +36,7 @@ app.use(
       }
     },
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
@@ -57,7 +57,10 @@ app.use("/api/users", adminRoutes);
 app.use("/app", resetPasswordRoutes);
 
 // ✅ Static uploads
-app.use("/uploads", express.static(path.join(process.cwd(), "public", "uploads")));
+app.use(
+  "/uploads",
+  express.static(path.join(process.cwd(), "public", "uploads")),
+);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

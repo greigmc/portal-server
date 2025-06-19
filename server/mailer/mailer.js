@@ -80,7 +80,7 @@ export const sendContactEmails = async ({
 
   const notifyOwner = {
     from: yourEmail,
-    to: process.env.EMAIL_USER, // <-- fix: you were using EMAIL_HOST
+    to: process.env.EMAIL_USER,
     subject: `New Portfolio Message from ${name}`,
     text: content,
   };
@@ -88,16 +88,22 @@ export const sendContactEmails = async ({
   const autoReply = {
     from: yourEmail,
     to: email,
-    subject: "Message received",
+    subject: "Thanks for reaching out!",
     html: `
-      <p>Hi ${name},<br>
-      Thank you for sending me a message. I will get back to you soon.<br><br>
-      Regards,<br>
-      ${process.env.EMAIL_YOURNAME}<br>
-      <a href="${process.env.EMAIL_YOURSITE}">${process.env.EMAIL_YOURSITE}</a></p>
-    `,
-  };
+<p>Hi ${name},</p>
 
+<p>Thank you for getting in touch via my portfolio. I’ve received your message and will respond as soon as I can.</p>
+
+<p><strong>Your Message:</strong><br>
+<em>${subject}</em><br>
+${message}</p>
+
+<p>Kind regards,<br>
+${process.env.EMAIL_YOURNAME}<br>
+${process.env.EMAIL_USER}<br>
+<a href="${process.env.EMAIL_YOURSITE}" target="_blank" rel="noopener noreferrer">${process.env.EMAIL_YOURSITE}</a></p>
+  `,
+  };
   await transporter.sendMail(notifyOwner);
   await transporter.sendMail(autoReply);
 };
