@@ -1,8 +1,10 @@
 // server.js
+import "./config/env.js"; 
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
+import cookieParser from "cookie-parser";
+
 
 import connectDB from "./config/db.js";
 import userRoutes from "./routes/userRoutes.js";
@@ -14,7 +16,6 @@ import forgetPasswordRoutes from "./routes/forgetPasswordRoutes.js";
 import resetPasswordRoutes from "./routes/resetPasswordRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 
-dotenv.config();
 
 const app = express();
 
@@ -36,10 +37,13 @@ app.use(
       }
     },
     credentials: true,
+    allowedHeaders: ['Content-Type', 'Authorization'],
   }),
 );
 
+
 app.use(express.json());
+app.use(cookieParser()); 
 
 // ✅ Connect to MongoDB
 connectDB(process.env.MONGODB_URI);
